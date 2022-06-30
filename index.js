@@ -19,7 +19,7 @@ app.post("/", function (req, res) {
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
-    const url ="https://us18.api.mailchimp.com/3.0/lists/47376995b9"
+    const url = "https://us18.api.mailchimp.com/3.0/lists/47376995b9"
     const data = {
         members: [
             {
@@ -34,28 +34,26 @@ app.post("/", function (req, res) {
     const json = JSON.stringify(data);
     console.log(json);
     const option = {
-        method:"POST",
-        auth:"Madhav:7d6205b2aa43c2e555afe4b880376fe5-us18"
+        method: "POST",
+        auth: "Madhav:7d6205b2aa43c2e555afe4b880376fe5-us18"
     }
-    const request =https.request(url,option,function (response) {
-        response.on("data",function (data) {
-            console.log(JSON.parse(data)); 
+    const request = https.request(url, option, function (response) {
+        response.on("data", function (data) {
+            console.log(JSON.parse(data));
             console.log(response.statusCode)
-        if (response.statusCode ===200) { 
-           res.sendFile(__dirname+"/sucess.html")
-           
-        } else {
-            res.sendFile(__dirname+"/failure.html")
-          
-        } 
+            if (response.statusCode === 200) {
+                res.sendFile(__dirname + "/sucess.html")
+
+            } else {
+                res.sendFile(__dirname + "/failure.html")
+
+            }
         })
-       
+
     })
     request.write(json);
     request.end();
 })
-
-
-app.listen(3000, function () {
-    console.log("Running at 3000");
-})
+app.post("/failure",function (req,res) {
+    res.redirect("/")
+});
